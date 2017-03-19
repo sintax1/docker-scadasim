@@ -7,13 +7,13 @@ RUN git clone https://github.com/sintax1/scadasim.git
 
 WORKDIR /scadasim
 
-# TODO: Remove this once dbus branch is merged with master
-RUN git checkout dbus
-
 RUN make
 
-VOLUME /var/run/dbus:/var/run/dbus
+VOLUME /var/run/dbus
 
-#ENTRYPOINT python /scadasim/scadasim/dbusservice/dbusservice.py
+COPY scadasim_config.yml scadasim_config.yml
 
-CMD make run
+ENTRYPOINT python -i run.py -c scadasim_config.yml -d
+
+#CMD python -i run.py -c scadasim_config.yml -d
+
